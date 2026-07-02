@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Speak UP — Recuperar contraseña</title>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <div class="auth-wrapper">
+    <div class="auth-card">
+
+      <div class="brand">
+        <div class="brand-icon">🎙️</div>
+        <h1 class="brand-name">Speak <span>UP</span></h1>
+        <p class="brand-sub">Recuperar contraseña</p>
+      </div>
+
+      <div class="banner banner-error hidden" id="bannerError">
+        ⚠️ Este correo no está registrado.
+      </div>
+
+      <div class="banner banner-success hidden" id="bannerSuccess">
+        ✅ Enlace de recuperación enviado a tu correo.
+      </div>
+
+      <form id="recoverForm" novalidate>
+        <div class="field-group">
+          <label for="email">Correo electrónico registrado</label>
+          <input
+            type="email"
+            id="email"
+            placeholder="tucorreo@ejemplo.com"
+            autocomplete="email"
+          />
+          <span class="field-msg" id="emailMsg"></span>
+        </div>
+
+        <button type="submit" class="btn-primary" id="btnRecover">
+          Enviar enlace de recuperación
+        </button>
+      </form>
+
+      <p class="footer-note"><a href="index.html">← Volver al inicio de sesión</a></p>
+    </div>
+  </div>
+
+  <script src="js/recover.js"></script>
+</body>
+</html>

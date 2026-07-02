@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Speak UP — Nueva práctica</title>
+  <link rel="stylesheet" href="css/styles.css" />
+  <link rel="stylesheet" href="css/record.css" />
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="nav-brand">🎙️ Speak <span>UP</span></div>
+    <div class="nav-right">
+      <span class="nav-user" id="navUser">👤 Usuario</span>
+      <button class="btn-logout" id="btnLogout">Cerrar sesión</button>
+    </div>
+  </nav>
+
+  <main class="record-main">
+
+    <!-- Tabs -->
+    <div class="tabs">
+      <button class="tab active" id="tabGrabar" onclick="switchTab('grabar')">🎥 Grabar video</button>
+      <button class="tab" id="tabSubir" onclick="switchTab('subir')">📁 Subir video</button>
+    </div>
+
+    <!-- ── TAB GRABAR ── -->
+    <div class="tab-content" id="panelGrabar">
+
+      <!-- Alertas de tiempo -->
+      <div class="alert-banner hidden" id="alert30">⚠️ ¡Quedan 30 segundos!</div>
+      <div class="alert-banner alert-red hidden" id="alert10">🚨 ¡10 segundos!</div>
+
+      <!-- Cámara -->
+      <div class="camera-wrap" id="cameraWrap">
+        <video id="videoPreview" autoplay muted playsinline></video>
+        <div class="rec-indicator hidden" id="recIndicator">🔴 REC</div>
+        <div class="cronometro hidden" id="cronometro">00:00</div>
+      </div>
+
+      <!-- Controles -->
+      <div class="controls" id="controlsInicio">
+        <button class="btn-primary" id="btnIniciarCamara">📷 Activar cámara</button>
+      </div>
+
+      <div class="controls hidden" id="controlsGrabando">
+        <button class="btn-success" id="btnIniciarGrabacion">▶ Iniciar grabación</button>
+        <button class="btn-danger hidden" id="btnDetenerGrabacion">⏹ Detener</button>
+        <button class="btn-warning hidden" id="btnPausar">⏸ Pausar</button>
+      </div>
+
+      <!-- Modal tiempo agotado -->
+      <div class="modal-overlay hidden" id="modalTiempo">
+        <div class="modal">
+          <div class="modal-icon">⏰</div>
+          <h3>¡Tiempo agotado!</h3>
+          <p>Tu exposición ha llegado al límite de tiempo.</p>
+          <div class="modal-buttons">
+            <button class="btn-primary" id="btnVerResultados">Ver resultados</button>
+            <button class="btn-outline" id="btnMasTiempo">Solicitar más tiempo</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ── TAB SUBIR ── -->
+    <div class="tab-content hidden" id="panelSubir">
+      <div class="upload-area" id="uploadArea">
+        <div class="upload-icon">📁</div>
+        <h3>Arrastra tu video aquí</h3>
+        <p>o haz clic para seleccionar</p>
+        <p class="format-hint">Formatos aceptados: <strong>MP4, AVI, MOV, WEBM</strong> · Máx. 500MB</p>
+        <input type="file" id="fileInput" accept=".mp4,.avi,.mov,.webm,video/*" hidden />
+        <button class="btn-primary" onclick="document.getElementById('fileInput').click()">
+          Seleccionar video
+        </button>
+      </div>
+
+      <!-- Preview del archivo seleccionado -->
+      <div class="file-preview hidden" id="filePreview">
+        <div class="file-info">
+          <span class="file-icon">🎬</span>
+          <div>
+            <p class="file-name" id="fileName"></p>
+            <p class="file-size" id="fileSize"></p>
+          </div>
+          <button class="btn-remove" onclick="removeFile()">✕</button>
+        </div>
+        <video id="videoUploadPreview" controls></video>
+        <button class="btn-primary" id="btnAnalizarVideo">🤖 Analizar con IA</button>
+      </div>
+
+      <!-- Error de formato -->
+      <div class="banner banner-error hidden" id="formatError">
+        ⚠️ Formato no válido. Usa MP4, AVI, MOV o WEBM.
+      </div>
+    </div>
+
+  </main>
+
+  <script src="js/dashboard.js"></script>
+  <script src="js/record.js"></script>
+</body>
+</html>

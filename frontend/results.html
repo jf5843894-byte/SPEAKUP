@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Speak UP — Resultados</title>
+  <link rel="stylesheet" href="css/styles.css" />
+  <link rel="stylesheet" href="css/results.css" />
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="nav-brand">🎙️ Speak <span>UP</span></div>
+    <div class="nav-right">
+      <span class="nav-user" id="navUser">👤 Usuario</span>
+      <button class="btn-logout" id="btnLogout">Cerrar sesión</button>
+    </div>
+  </nav>
+
+  <main class="results-main">
+
+    <!-- Cargando -->
+    <div class="loading-wrap" id="loadingWrap">
+      <div class="loading-icon">🤖</div>
+      <h2>Analizando tu exposición...</h2>
+      <p>La IA está procesando tu video. Esto puede tomar unos segundos.</p>
+      <div class="loading-bar">
+        <div class="loading-fill" id="loadingFill"></div>
+      </div>
+    </div>
+
+    <!-- Resultados -->
+    <div class="results-wrap hidden" id="resultsWrap">
+
+      <!-- Puntuación general -->
+      <div class="score-card">
+        <div class="score-circle" id="scoreCircle">
+          <span id="scoreNumber">0</span>
+          <small>/100</small>
+        </div>
+        <div class="score-info">
+          <h2>Resultado de tu exposición</h2>
+          <p id="scoreMensaje"></p>
+        </div>
+      </div>
+
+      <!-- Métricas -->
+      <div class="metrics-grid">
+        <div class="metric-card">
+          <div class="metric-label">Fluidez</div>
+          <div class="metric-bar">
+            <div class="metric-fill blue" id="barFluidez"></div>
+          </div>
+          <div class="metric-value" id="valFluidez">0%</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-label">Velocidad del habla</div>
+          <div class="metric-bar">
+            <div class="metric-fill green" id="barVelocidad"></div>
+          </div>
+          <div class="metric-value" id="valVelocidad">0%</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-label">Claridad</div>
+          <div class="metric-bar">
+            <div class="metric-fill purple" id="barClaridad"></div>
+          </div>
+          <div class="metric-value" id="valClaridad">0%</div>
+        </div>
+      </div>
+
+      <!-- Muletillas -->
+      <div class="section-card" id="muletillasSection">
+        <h3>🔤 Muletillas detectadas</h3>
+        <div id="muletillasList"></div>
+      </div>
+
+      <!-- Velocidad -->
+      <div class="section-card">
+        <h3>⚡ Velocidad del habla</h3>
+        <p id="velocidadTexto"></p>
+      </div>
+
+      <!-- Transcripción -->
+      <div class="section-card">
+        <h3>📝 Transcripción</h3>
+        <p class="transcripcion" id="transcripcionTexto"></p>
+      </div>
+
+      <!-- Fortalezas y debilidades -->
+      <div class="fd-grid">
+        <div class="fd-card fortalezas">
+          <h3>✅ Fortalezas</h3>
+          <ul id="listaFortalezas"></ul>
+        </div>
+        <div class="fd-card debilidades">
+          <h3>❌ Áreas de mejora</h3>
+          <ul id="listaDebilidades"></ul>
+        </div>
+      </div>
+
+      <!-- Recomendaciones -->
+      <div class="section-card">
+        <h3>💡 Recomendaciones de la IA</h3>
+        <ul id="listaRecomendaciones"></ul>
+      </div>
+
+      <!-- Acciones -->
+      <div class="actions">
+        <button class="btn-primary" id="btnDescargarPDF">📄 Descargar PDF</button>
+        <button class="btn-outline" onclick="window.location.href='record.html'">🔄 Nueva práctica</button>
+        <button class="btn-outline" onclick="window.location.href='dashboard.html'">🏠 Inicio</button>
+      </div>
+
+    </div>
+  </main>
+
+  <script src="js/results.js"></script>
+</body>
+</html>

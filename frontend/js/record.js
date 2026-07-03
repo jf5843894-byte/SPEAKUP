@@ -122,20 +122,52 @@ btnDetener.addEventListener('click', () => {
   recIndicator.classList.add('hidden');
   btnDetener.classList.add('hidden');
   btnPausar.classList.add('hidden');
-  btnIniciarGrab.classList.remove('hidden');
-  btnIniciarGrab.textContent = '▶ Nueva grabación';
   alert30.classList.add('hidden');
   alert10.classList.add('hidden');
+  btnIniciarGrab.classList.remove('hidden');
+  btnIniciarGrab.textContent = '⏳ Subiendo y analizando...';
+  btnIniciarGrab.disabled = true;
 });
 
-// ── Guardar video grabado ─────────────────────────────────────────────────
+// ── Guardar y analizar video grabado ─────────────────────────────────────
 function guardarVideo() {
-  const blob = new Blob(chunks, { type: 'video/webm' });
-  const url  = URL.createObjectURL(blob);
-  const a    = document.createElement('a');
-  a.href     = url;
-  a.download = `speakup-grabacion-${Date.now()}.webm`;
-  a.click();
+  const blob     = new Blob(chunks, { type: 'video/webm' });
+  
+  console.log('Tamaño del video:', blob.size, 'bytes');
+  
+  const formData = new FormData();
+  formData.append('audio', blob, 'grabacion.webm');
+
+  fetch('http://localhost:3000/api/analysis/subir', {
+    method: 'POST',
+    body: formData,
+    keepalive: false
+  })
+  .then(res => {
+    console.log('Status respuesta:', res.status);
+    return res.json();
+  })
+ .then(data => {
+    console.log('Datos recibidos:', data);
+    if (data && data.puntuaciones) {
+      localStorage.setItem('speakup_resultado', JSON.stringify(data));
+      console.log('Guardado en localStorage, redirigiendo...');
+      setTimeout(() => {
+        window.location.href = 'http://127.0.0.1:5500/SPEAKUP/frontend/results.html';
+      }, 100);
+    } else {
+      console.error('Datos inválidos:', data);
+      alert('Error: respuesta inválida del servidor');
+      btnIniciarGrab.textContent = '▶ Nueva grabación';
+      btnIniciarGrab.disabled = false;
+    }
+  })
+  .catch(err => {
+    console.error('Error fetch:', err);
+    btnIniciarGrab.textContent = '▶ Nueva grabación';
+    btnIniciarGrab.disabled = false;
+    alert('Error de conexión: ' + err.message);
+  });
 }
 
 // ── Modal tiempo agotado ──────────────────────────────────────────────────
@@ -210,7 +242,7 @@ function removeFile() {
 }
 
 btnAnalizarVideo.addEventListener('click', () => {
-  alert('🤖 Análisis con IA — próximamente en la Fase 3');
+  window.location.href = 'http://127.0.0.1:5500/SPEAKUP/frontend/results.html';
 });
 
 // ── Helpers ───────────────────────────────────────────────────────────────

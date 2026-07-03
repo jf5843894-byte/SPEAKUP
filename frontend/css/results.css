@@ -1,0 +1,202 @@
+/* ── Results page ── */
+.results-main {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 32px 24px;
+}
+
+/* ── Loading ── */
+.loading-wrap {
+  text-align: center;
+  padding: 60px 24px;
+}
+
+.loading-icon {
+  font-size: 64px;
+  margin-bottom: 16px;
+  animation: bounce 1s infinite;
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-10px); }
+}
+
+.loading-wrap h2 { font-size: 24px; margin-bottom: 8px; }
+.loading-wrap p  { color: var(--gray-400); margin-bottom: 24px; }
+
+.loading-bar {
+  height: 8px;
+  background: var(--gray-200);
+  border-radius: 99px;
+  overflow: hidden;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.loading-fill {
+  height: 100%;
+  width: 0%;
+  background: var(--blue);
+  border-radius: 99px;
+  animation: loadAnim 3s ease-in-out infinite;
+}
+
+@keyframes loadAnim {
+  0%   { width: 0%; }
+  50%  { width: 70%; }
+  100% { width: 95%; }
+}
+
+/* ── Score card ── */
+.score-card {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  background: var(--white);
+  border-radius: 16px;
+  padding: 28px;
+  box-shadow: var(--shadow);
+  margin-bottom: 20px;
+}
+
+.score-circle {
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  background: var(--blue);
+  color: var(--white);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.score-circle span { font-size: 36px; font-weight: 700; line-height: 1; }
+.score-circle small { font-size: 13px; opacity: .8; }
+.score-info h2 { font-size: 22px; margin-bottom: 6px; }
+.score-info p  { color: var(--gray-400); }
+
+/* ── Metrics ── */
+.metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.metric-card {
+  background: var(--white);
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: var(--shadow);
+}
+
+.metric-label { font-size: 13px; font-weight: 600; color: var(--gray-600); margin-bottom: 10px; }
+
+.metric-bar {
+  height: 8px;
+  background: var(--gray-200);
+  border-radius: 99px;
+  overflow: hidden;
+  margin-bottom: 6px;
+}
+
+.metric-fill {
+  height: 100%;
+  border-radius: 99px;
+  transition: width 1s ease;
+  width: 0%;
+}
+
+.metric-fill.blue   { background: var(--blue); }
+.metric-fill.green  { background: var(--green); }
+.metric-fill.purple { background: #7C3AED; }
+
+.metric-value { font-size: 18px; font-weight: 700; text-align: right; }
+
+/* ── Section cards ── */
+.section-card {
+  background: var(--white);
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: var(--shadow);
+  margin-bottom: 16px;
+}
+
+.section-card h3 { font-size: 16px; font-weight: 700; margin-bottom: 12px; }
+
+.transcripcion {
+  color: var(--gray-600);
+  line-height: 1.7;
+  font-size: 15px;
+}
+
+/* ── Muletillas ── */
+#muletillasList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.muletilla-tag {
+  background: var(--red-light);
+  color: var(--red);
+  border: 1px solid #FECACA;
+  border-radius: 99px;
+  padding: 6px 14px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+/* ── Fortalezas y debilidades ── */
+.fd-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.fd-card {
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: var(--shadow);
+}
+
+.fd-card h3 { font-size: 15px; font-weight: 700; margin-bottom: 12px; }
+.fd-card ul { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+.fd-card ul li { font-size: 14px; }
+
+.fortalezas { background: var(--green-light); }
+.debilidades { background: var(--red-light); }
+
+/* ── Recomendaciones ── */
+#listaRecomendaciones {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+#listaRecomendaciones li {
+  background: var(--blue-light);
+  color: var(--blue);
+  border-radius: var(--radius);
+  padding: 10px 14px;
+  font-size: 14px;
+}
+
+/* ── Acciones ── */
+.actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 24px;
+}
+
+@media (max-width: 600px) {
+  .score-card { flex-direction: column; text-align: center; }
+  .fd-grid    { grid-template-columns: 1fr; }
+}

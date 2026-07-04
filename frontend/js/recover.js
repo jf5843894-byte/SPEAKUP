@@ -1,6 +1,6 @@
 // ── recover.js — US-02 ────────────────────────────────────────────────────
 
-const API = 'http://localhost:3000/api';
+const API = 'https://speakup-production-132c.up.railway.app/api';
 
 const form        = document.getElementById('recoverForm');
 const emailInput  = document.getElementById('email');

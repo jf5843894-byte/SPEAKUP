@@ -9,12 +9,14 @@
 </head>
 <body>
 
-  <!-- Navbar -->
   <nav class="navbar">
     <div class="nav-brand">🎙️ Speak <span>UP</span></div>
     <div class="nav-right">
-      <span class="nav-user" id="navUser">👤 Usuario</span>
-      <button class="btn-logout" id="btnLogout">Cerrar sesión</button>
+      <div class="nav-user-info">
+        <div class="nav-avatar" id="navAvatar">L</div>
+        <span class="nav-user" id="navUser">Usuario</span>
+      </div>
+      <button class="btn-logout" id="btnLogout">Salir</button>
     </div>
   </nav>
 
@@ -23,8 +25,8 @@
     <!-- Cargando -->
     <div class="loading-wrap" id="loadingWrap">
       <div class="loading-icon">🤖</div>
-      <h2>Analizando tu exposición...</h2>
-      <p>La IA está procesando tu video. Esto puede tomar unos segundos.</p>
+      <h2>Procesando tu exposición...</h2>
+      <p>La inteligencia artificial está analizando tu video.</p>
       <div class="loading-bar">
         <div class="loading-fill" id="loadingFill"></div>
       </div>
@@ -33,7 +35,7 @@
     <!-- Resultados -->
     <div class="results-wrap hidden" id="resultsWrap">
 
-      <!-- Puntuación general -->
+      <!-- Puntuación -->
       <div class="score-card">
         <div class="score-circle" id="scoreCircle">
           <span id="scoreNumber">0</span>
@@ -71,7 +73,7 @@
       </div>
 
       <!-- Muletillas -->
-      <div class="section-card" id="muletillasSection">
+      <div class="section-card">
         <h3>🔤 Muletillas detectadas</h3>
         <div id="muletillasList"></div>
       </div>
@@ -109,8 +111,12 @@
       <!-- Acciones -->
       <div class="actions">
         <button class="btn-primary" id="btnDescargarPDF">📄 Descargar PDF</button>
-        <button class="btn-outline" onclick="window.location.href='record.html'">🔄 Nueva práctica</button>
-        <button class="btn-outline" onclick="window.location.href='dashboard.html'">🏠 Inicio</button>
+        <button class="btn-outline" onclick="window.location.href='record.html'">
+          🔄 Nueva práctica
+        </button>
+        <button class="btn-outline" onclick="window.location.href='dashboard.html'">
+          🏠 Inicio
+        </button>
       </div>
 
     </div>
@@ -118,4 +124,4 @@
 
   <script src="js/results.js"></script>
 </body>
-</html>
+</html> 

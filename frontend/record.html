@@ -9,12 +9,14 @@
 </head>
 <body>
 
-  <!-- Navbar -->
   <nav class="navbar">
     <div class="nav-brand">🎙️ Speak <span>UP</span></div>
     <div class="nav-right">
-      <span class="nav-user" id="navUser">👤 Usuario</span>
-      <button class="btn-logout" id="btnLogout">Cerrar sesión</button>
+      <div class="nav-user-info">
+        <div class="nav-avatar" id="navAvatar">L</div>
+        <span class="nav-user" id="navUser">Usuario</span>
+      </div>
+      <button class="btn-logout" id="btnLogout">Salir</button>
     </div>
   </nav>
 
@@ -29,20 +31,19 @@
     <!-- ── TAB GRABAR ── -->
     <div class="tab-content" id="panelGrabar">
 
-      <!-- Alertas de tiempo -->
       <div class="alert-banner hidden" id="alert30">⚠️ ¡Quedan 30 segundos!</div>
-      <div class="alert-banner alert-red hidden" id="alert10">🚨 ¡10 segundos!</div>
+      <div class="alert-banner alert-red hidden" id="alert10">🚨 ¡Solo 10 segundos!</div>
 
-      <!-- Cámara -->
       <div class="camera-wrap" id="cameraWrap">
         <video id="videoPreview" autoplay muted playsinline></video>
-        <div class="rec-indicator hidden" id="recIndicator">🔴 REC</div>
+        <div class="rec-indicator hidden" id="recIndicator">● REC</div>
         <div class="cronometro hidden" id="cronometro">00:00</div>
       </div>
 
-      <!-- Controles -->
       <div class="controls" id="controlsInicio">
-        <button class="btn-primary" id="btnIniciarCamara">📷 Activar cámara</button>
+        <button class="btn-primary" id="btnIniciarCamara" style="width:auto;padding:13px 32px">
+          📷 Activar cámara
+        </button>
       </div>
 
       <div class="controls hidden" id="controlsGrabando">
@@ -51,15 +52,16 @@
         <button class="btn-warning hidden" id="btnPausar">⏸ Pausar</button>
       </div>
 
-      <!-- Modal tiempo agotado -->
       <div class="modal-overlay hidden" id="modalTiempo">
         <div class="modal">
           <div class="modal-icon">⏰</div>
           <h3>¡Tiempo agotado!</h3>
-          <p>Tu exposición ha llegado al límite de tiempo.</p>
+          <p>Tu exposición ha llegado al límite de tiempo configurado.</p>
           <div class="modal-buttons">
-            <button class="btn-primary" id="btnVerResultados">Ver resultados</button>
-            <button class="btn-outline" id="btnMasTiempo">Solicitar más tiempo</button>
+            <button class="btn-primary" style="width:auto;padding:12px 24px" id="btnVerResultados">
+              Ver resultados
+            </button>
+            <button class="btn-outline" id="btnMasTiempo">Más tiempo</button>
           </div>
         </div>
       </div>
@@ -68,18 +70,19 @@
 
     <!-- ── TAB SUBIR ── -->
     <div class="tab-content hidden" id="panelSubir">
+
       <div class="upload-area" id="uploadArea">
         <div class="upload-icon">📁</div>
         <h3>Arrastra tu video aquí</h3>
-        <p>o haz clic para seleccionar</p>
-        <p class="format-hint">Formatos aceptados: <strong>MP4, AVI, MOV, WEBM</strong> · Máx. 500MB</p>
+        <p>o haz clic para seleccionar desde tu dispositivo</p>
+        <p class="format-hint">Formatos: <strong>MP4, AVI, MOV, WEBM</strong> · Máx. 500MB</p>
         <input type="file" id="fileInput" accept=".mp4,.avi,.mov,.webm,video/*" hidden />
-        <button class="btn-primary" onclick="document.getElementById('fileInput').click()">
+        <button class="btn-primary" style="width:auto;padding:12px 28px"
+          onclick="document.getElementById('fileInput').click()">
           Seleccionar video
         </button>
       </div>
 
-      <!-- Preview del archivo seleccionado -->
       <div class="file-preview hidden" id="filePreview">
         <div class="file-info">
           <span class="file-icon">🎬</span>
@@ -93,19 +96,15 @@
         <button class="btn-primary" id="btnAnalizarVideo">🤖 Analizar con IA</button>
       </div>
 
-      <!-- Error de formato -->
       <div class="banner banner-error hidden" id="formatError">
         ⚠️ Formato no válido. Usa MP4, AVI, MOV o WEBM.
       </div>
+
     </div>
 
   </main>
-  <script>
-window.addEventListener('beforeunload', (e) => {
-  e.preventDefault();
-  e.returnValue = '';
-});
-</script>
+
+  <script src="js/dashboard.js"></script>
   <script src="js/record.js"></script>
 </body>
-</html>
+</html> 

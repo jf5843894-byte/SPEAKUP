@@ -5,49 +5,143 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Speak UP — Dashboard</title>
   <link rel="stylesheet" href="css/styles.css" />
+  <link rel="stylesheet" href="css/dashboard.css" />
 </head>
 <body>
 
-  <!-- Navbar -->
   <nav class="navbar">
     <div class="nav-brand">🎙️ Speak <span>UP</span></div>
     <div class="nav-right">
-      <span class="nav-user" id="navUser">👤 Usuario</span>
-      <button class="btn-logout" id="btnLogout">Cerrar sesión</button>
+      <div class="nav-user-info">
+        <div class="nav-avatar" id="navAvatar">L</div>
+        <span class="nav-user" id="navUser">Usuario</span>
+      </div>
+      <button class="btn-logout" id="btnLogout">Salir</button>
     </div>
   </nav>
 
-  <!-- Main -->
   <main class="dashboard">
-    <div class="dash-welcome">
-      <h2>¡Bienvenido, <span id="welcomeName">Usuario</span>! 👋</h2>
-      <p>¿Qué quieres practicar hoy?</p>
-    </div>
 
-    <div class="dash-cards">
-      <div class="dash-card" onclick="window.location='record.html'">
-        <div class="dash-card-icon">🎥</div>
-        <h3>Nueva práctica</h3>
-        <p>Graba o sube un video de tu exposición</p>
-        <span class="dash-card-badge">EP002</span>
+    <!-- Hero -->
+    <div class="hero-section">
+      <div class="hero-text">
+        <p class="hero-sub">👋 Bienvenido de vuelta,</p>
+        <h1 class="hero-title" id="welcomeName">Usuario</h1>
+        <p class="hero-desc">Practica tu exposición oral y recibe análisis detallado con inteligencia artificial.</p>
+        <button class="btn-hero" onclick="window.location='record.html'">
+          <span>▶</span> Iniciar nueva práctica
+        </button>
       </div>
-
-     <div class="dash-card" onclick="window.location='results.html'">
-        <div class="dash-card-icon">🤖</div>
-        <h3>Análisis con IA</h3>
-        <p>Revisa tu habla, gestos y postura</p>
-        <span class="dash-card-badge">EP003</span>
-     </div>
-     
-      <div class="dash-card disabled">
-        <div class="dash-card-icon">📊</div>
-        <h3>Mis reportes</h3>
-        <p>Historial de resultados y recomendaciones</p>
-        <span class="dash-card-badge coming">Próximamente</span>
+      <div class="hero-visual">
+        <div class="hero-orb"></div>
+        <div class="hero-icon-big">🎙️</div>
       </div>
     </div>
+
+    <!-- Stats -->
+    <div class="stats-row">
+      <div class="stat-card">
+        <div class="stat-icon" style="background:rgba(124,58,237,.2);color:#A855F7">📹</div>
+        <div class="stat-info">
+          <div class="stat-value" id="statPracticas">0</div>
+          <div class="stat-label">Prácticas realizadas</div>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon" style="background:rgba(6,182,212,.2);color:#06B6D4">📊</div>
+        <div class="stat-info">
+          <div class="stat-value" id="statPromedio">—</div>
+          <div class="stat-label">Puntuación promedio</div>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon" style="background:rgba(236,72,153,.2);color:#EC4899">🔤</div>
+        <div class="stat-info">
+          <div class="stat-value" id="statMuletillas">—</div>
+          <div class="stat-label">Muletillas detectadas</div>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon" style="background:rgba(16,185,129,.2);color:#10B981">⚡</div>
+        <div class="stat-info">
+          <div class="stat-value" id="statVelocidad">—</div>
+          <div class="stat-label">Palabras por minuto</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Módulos -->
+    <div class="section-title">
+      <h2>¿Qué quieres hacer hoy?</h2>
+      <p>Selecciona un módulo para comenzar</p>
+    </div>
+
+    <div class="modules-grid">
+      <div class="module-card primary-card" onclick="window.location='record.html'">
+        <div class="module-glow"></div>
+        <div class="module-icon">🎥</div>
+        <div class="module-content">
+          <h3>Nueva práctica</h3>
+          <p>Graba o sube un video de tu exposición oral para analizarla</p>
+        </div>
+        <div class="module-arrow">→</div>
+        <span class="module-badge active-badge">Disponible</span>
+      </div>
+
+      <div class="module-card" onclick="window.location='results.html'">
+        <div class="module-icon">🤖</div>
+        <div class="module-content">
+          <h3>Último análisis</h3>
+          <p>Revisa las métricas de tu última exposición analizada con IA</p>
+        </div>
+        <div class="module-arrow">→</div>
+        <span class="module-badge active-badge">Disponible</span>
+      </div>
+
+      <div class="module-card disabled-card">
+        <div class="module-icon">📊</div>
+        <div class="module-content">
+          <h3>Mis reportes</h3>
+          <p>Historial completo de tus exposiciones y progreso</p>
+        </div>
+        <span class="module-badge soon-badge">Próximamente</span>
+      </div>
+
+      <div class="module-card disabled-card">
+        <div class="module-icon">👁️</div>
+        <div class="module-content">
+          <h3>Análisis corporal</h3>
+          <p>Análisis de gestos y postura mediante visión artificial</p>
+        </div>
+        <span class="module-badge soon-badge">Próximamente</span>
+      </div>
+    </div>
+
+    <!-- Tips -->
+    <div class="tips-section">
+      <h2>💡 Consejos para mejorar</h2>
+      <div class="tips-grid">
+        <div class="tip-card">
+          <div class="tip-num">01</div>
+          <p>Practica frente al espejo para mejorar tu lenguaje corporal y contacto visual.</p>
+        </div>
+        <div class="tip-card">
+          <div class="tip-num">02</div>
+          <p>Haz pausas naturales en lugar de usar muletillas como "eh" o "este".</p>
+        </div>
+        <div class="tip-card">
+          <div class="tip-num">03</div>
+          <p>Mantén una velocidad de 120–160 palabras por minuto para mayor claridad.</p>
+        </div>
+        <div class="tip-card">
+          <div class="tip-num">04</div>
+          <p>Respira profundo antes de exponer para reducir nervios y hablar con seguridad.</p>
+        </div>
+      </div>
+    </div>
+
   </main>
 
   <script src="js/dashboard.js"></script>
 </body>
-</html>
+</html> 

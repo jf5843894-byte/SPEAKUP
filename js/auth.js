@@ -72,7 +72,7 @@ form.addEventListener('submit', async (e) => {
 
   try {
     const start = Date.now();
-
+    console.log('Enviando:', { email, password: pass });
     const res  = await fetch(`${API}/auth/login`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },

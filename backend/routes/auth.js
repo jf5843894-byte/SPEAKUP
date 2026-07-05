@@ -7,19 +7,20 @@ const router   = express.Router();
 const JWT_SECRET = 'speakup_secret_2026';
 
 // ── Base de datos en memoria ──────────────────────────────────────────────
+// ── Base de datos en memoria ──────────────────────────────────────────────
 const users = [
   {
     id: 1,
     name: 'Lucas Magallanes',
     email: 'lucas@speakup.com',
-    password: '$2a$10$MPWQ5CHEaOsnRCOY/HBA3uMK25ybhceidfa6pSca3fH3.xp9GJV4e',
+    password: '123456',
     role: 'student'
   },
   {
     id: 2,
     name: 'Padre Demo',
     email: 'padre@speakup.com',
-    password: '$2a$10$MPWQ5CHEaOsnRCOY/HBA3uMK25ybhceidfa6pSca3fH3.xp9GJV4e',
+    password: '123456',
     role: 'parent'
   }
 ];
@@ -51,7 +52,7 @@ router.post('/login', async (req, res) => {
   }
 
   const user  = users.find(u => u.email === email.toLowerCase());
-  const valid = user && await bcrypt.compare(password, user.password);
+  const valid = user && password === user.password;
 
   if (!valid) {
     if (!failedAttempts[email]) failedAttempts[email] = { count: 0, lastAttempt: Date.now() };

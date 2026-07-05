@@ -1,4 +1,4 @@
-// ── auth.js — US-01, US-03, US-04, US-05 ──────────────────────────────────
+// ── auth.js v2 — US-01, US-03, US-04, US-05 ──────────────────────────────────
 const API = 'https://speakup-production-132c.up.railway.app/api';
 
 // Elementos

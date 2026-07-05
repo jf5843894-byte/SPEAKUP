@@ -1,6 +1,5 @@
 // ── auth.js — US-01, US-03, US-04, US-05 ──────────────────────────────────
-
-const API = 'http://localhost:3000/api';
+const API = 'https://speakup-production-132c.up.railway.app/api';
 
 // Elementos
 const form        = document.getElementById('loginForm');
@@ -127,3 +126,4 @@ function animateProgress(onDone) {
     if (pct >= 100) { clearInterval(iv); onDone(); }
   }, 30);
 }
+

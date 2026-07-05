@@ -11,8 +11,13 @@ const API_URL        = 'https://api.assemblyai.com/v2';
 const MULETILLAS     = ['eh', 'este', 'o sea', 'básicamente', 'osea', 'mmm', 'eeh', 'bueno', 'entonces'];
 
 // ── Configurar multer para recibir archivos ───────────────────────────────
+const uploadsDir = path.join(__dirname, '../uploads');
+if (!require('fs').existsSync(uploadsDir)) {
+  require('fs').mkdirSync(uploadsDir, { recursive: true });
+}
+
 const storage = multer.diskStorage({
-  destination: (req, file, cb) => cb(null, path.join(__dirname, '../uploads')),
+  destination: (req, file, cb) => cb(null, uploadsDir),
   filename:    (req, file, cb) => cb(null, `audio-${Date.now()}.webm`)
 });
 const upload = multer({ storage, limits: { fileSize: 500 * 1024 * 1024 } });

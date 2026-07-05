@@ -2,7 +2,7 @@
 const express        = require('express');
 const cors           = require('cors');
 const authRoutes     = require('./routes/auth');
-const analysisRoutes = require('./routes/analysis');
+const analysisRoutes = require('./routes/analysis2');
 
 const app  = express();
 const PORT = process.env.PORT || 3000;

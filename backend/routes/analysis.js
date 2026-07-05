@@ -1,26 +1,18 @@
-// ── routes/analysis.js — EP003: Análisis real con AssemblyAI ─────────────
+// ── routes/analysis.js — Sin disco, todo en memoria ──────────────────────
 const express  = require('express');
 const axios    = require('axios');
 const multer   = require('multer');
-const fs       = require('fs');
-const path     = require('path');
 const router   = express.Router();
 
 const ASSEMBLYAI_KEY = 'b21ab6b91df545309c2c947e04641d59';
 const API_URL        = 'https://api.assemblyai.com/v2';
 const MULETILLAS     = ['eh', 'este', 'o sea', 'básicamente', 'osea', 'mmm', 'eeh', 'bueno', 'entonces'];
 
-// ── Configurar multer para recibir archivos ───────────────────────────────
-const uploadsDir = path.join(__dirname, '../uploads');
-if (!require('fs').existsSync(uploadsDir)) {
-  require('fs').mkdirSync(uploadsDir, { recursive: true });
-}
-
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => cb(null, uploadsDir),
-  filename:    (req, file, cb) => cb(null, `audio-${Date.now()}.webm`)
+// ── Multer en memoria (sin disco) ─────────────────────────────────────────
+const upload = multer({ 
+  storage: multer.memoryStorage(),
+  limits: { fileSize: 500 * 1024 * 1024 }
 });
-const upload = multer({ storage, limits: { fileSize: 500 * 1024 * 1024 } });
 
 // ── POST /api/analysis/subir ──────────────────────────────────────────────
 router.post('/subir', upload.single('audio'), async (req, res) => {
@@ -28,18 +20,17 @@ router.post('/subir', upload.single('audio'), async (req, res) => {
     return res.status(400).json({ message: 'No se recibió ningún archivo.' });
   }
 
-  const filePath = req.file.path;
-
   try {
     console.log('📤 Subiendo audio a AssemblyAI...');
 
-    // 1. Subir archivo a AssemblyAI
-    const fileData = fs.readFileSync(filePath);
-    const uploadRes = await axios.post(`${API_URL}/upload`, fileData, {
+    // 1. Subir buffer directo a AssemblyAI
+    const uploadRes = await axios.post(`${API_URL}/upload`, req.file.buffer, {
       headers: {
         authorization: ASSEMBLYAI_KEY,
         'content-type': 'application/octet-stream'
-      }
+      },
+      maxBodyLength: Infinity,
+      maxContentLength: Infinity
     });
 
     const audioUrl = uploadRes.data.upload_url;
@@ -56,7 +47,7 @@ router.post('/subir', upload.single('audio'), async (req, res) => {
     });
 
     const transcriptId = transcriptRes.data.id;
-    console.log('⏳ Procesando transcripción:', transcriptId);
+    console.log('⏳ Procesando:', transcriptId);
 
     // 3. Esperar resultado
     let transcript = null;
@@ -77,22 +68,18 @@ router.post('/subir', upload.single('audio'), async (req, res) => {
       }
     }
 
-    // Borrar archivo temporal
-    fs.unlinkSync(filePath);
-
     if (!transcript) {
       return res.status(408).json({ message: 'El análisis tardó demasiado. Intenta de nuevo.' });
     }
 
     // 4. Procesar resultados
-    const texto         = transcript.text || '';
-    const palabras      = texto.split(' ').filter(p => p.length > 0);
-    const duracionSeg   = transcript.audio_duration || 60;
-    const duracionMin   = Math.max(duracionSeg / 60, 0.1);
+    const texto          = transcript.text || '';
+    const palabras       = texto.split(' ').filter(p => p.length > 0);
+    const duracionSeg    = transcript.audio_duration || 60;
+    const duracionMin    = Math.max(duracionSeg / 60, 0.1);
     const palabrasPorMin = Math.round(palabras.length / duracionMin);
-    const textoLower    = texto.toLowerCase();
+    const textoLower     = texto.toLowerCase();
 
-    // Detectar muletillas
     const muletillasDetectadas = {};
     MULETILLAS.forEach(m => {
       const regex   = new RegExp(`\\b${m}\\b`, 'gi');
@@ -101,31 +88,26 @@ router.post('/subir', upload.single('audio'), async (req, res) => {
     });
 
     const totalMuletillas = Object.values(muletillasDetectadas).reduce((a, b) => a + b, 0);
+    const fluidez         = Math.max(0, Math.min(100, 100 - totalMuletillas * 4));
+    const velocidad       = palabrasPorMin >= 120 && palabrasPorMin <= 160 ? 90 : palabrasPorMin < 120 ? 70 : 75;
+    const claridad        = Math.min(100, Math.round((palabras.length / Math.max(duracionSeg, 1)) * 10 + 60));
+    const general         = Math.round((fluidez + velocidad + claridad) / 3);
 
-    // Puntuaciones
-    const fluidez   = Math.max(0, Math.min(100, 100 - totalMuletillas * 4));
-    const velocidad = palabrasPorMin >= 120 && palabrasPorMin <= 160 ? 90 :
-                      palabrasPorMin < 120 ? 70 : 75;
-    const claridad  = Math.min(100, Math.round((palabras.length / Math.max(duracionSeg, 1)) * 10 + 60));
-    const general   = Math.round((fluidez + velocidad + claridad) / 3);
-
-    // Fortalezas y debilidades
     const fortalezas  = [];
     const debilidades = [];
-    if (fluidez >= 70)        fortalezas.push('Buena fluidez en el discurso');
-    else                      debilidades.push('Uso frecuente de muletillas');
-    if (velocidad >= 80)      fortalezas.push('Velocidad del habla adecuada');
-    else                      debilidades.push('Velocidad del habla irregular');
-    if (claridad >= 75)       fortalezas.push('Claridad en la expresión');
-    else                      debilidades.push('Falta de claridad en algunas partes');
+    if (fluidez >= 70)         fortalezas.push('Buena fluidez en el discurso');
+    else                       debilidades.push('Uso frecuente de muletillas');
+    if (velocidad >= 80)       fortalezas.push('Velocidad del habla adecuada');
+    else                       debilidades.push('Velocidad del habla irregular');
+    if (claridad >= 75)        fortalezas.push('Claridad en la expresión');
+    else                       debilidades.push('Falta de claridad en algunas partes');
     if (totalMuletillas === 0) fortalezas.push('Sin muletillas detectadas');
     if (palabras.length > 50)  fortalezas.push('Buen desarrollo del contenido');
 
-    // Recomendaciones
     const recomendaciones = [];
-    if (totalMuletillas > 0)  recomendaciones.push('Practica pausar en lugar de usar muletillas como "eh" o "este".');
-    if (velocidad < 80)       recomendaciones.push('Intenta mantener una velocidad de 120-160 palabras por minuto.');
-    if (fluidez < 70)         recomendaciones.push('Graba y escucha tus exposiciones para identificar muletillas.');
+    if (totalMuletillas > 0) recomendaciones.push('Practica pausar en lugar de usar muletillas como "eh" o "este".');
+    if (velocidad < 80)      recomendaciones.push('Intenta mantener una velocidad de 120-160 palabras por minuto.');
+    if (fluidez < 70)        recomendaciones.push('Graba y escucha tus exposiciones para identificar muletillas.');
     recomendaciones.push('Practica frente al espejo para mejorar tu lenguaje corporal.');
     recomendaciones.push('Realiza respiraciones profundas antes de exponer para reducir nervios.');
 
@@ -144,10 +126,9 @@ router.post('/subir', upload.single('audio'), async (req, res) => {
     });
 
   } catch (err) {
-    if (fs.existsSync(filePath)) fs.unlinkSync(filePath);
     console.error('Error análisis:', err.message);
     return res.status(500).json({ message: 'Error al analizar el audio: ' + err.message });
   }
 });
 
-module.exports = router;
+module.exports = router; 

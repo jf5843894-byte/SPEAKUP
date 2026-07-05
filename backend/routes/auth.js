@@ -12,14 +12,14 @@ const users = [
     id: 1,
     name: 'Lucas Magallanes',
     email: 'lucas@speakup.com',
-    password: '$2a$10$mDsU8XGsVQFHDiSh5SDXvevjz9YapSkBHDrW6Owd0n.zGyilBv8em',
+    password: '$2a$10$MPWQ5CHEaOsnRCOY/HBA3uMK25ybhceidfa6pSca3fH3.xp9GJV4e',
     role: 'student'
   },
   {
     id: 2,
     name: 'Padre Demo',
     email: 'padre@speakup.com',
-    password: '$2a$10$mDsU8XGsVQFHDiSh5SDXvevjz9YapSkBHDrW6Owd0n.zGyilBv8em',
+    password: '$2a$10$MPWQ5CHEaOsnRCOY/HBA3uMK25ybhceidfa6pSca3fH3.xp9GJV4e',
     role: 'parent'
   }
 ];
